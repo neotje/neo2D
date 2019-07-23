@@ -29,9 +29,25 @@ class entity {
   }
 
   draw() {
-    neo2D.draw.style("line", "red");
+    // set lineWidth
     neo2D.draw.lineWidth(2);
 
+    // set line color
+    neo2D.draw.style("line", "green");
+
+    // draw arc
+    neo2D.draw.arc("line", 250, 250, 15, 0, 3);
+
+    // draw line
+    neo2D.draw.style("line", "blue");
+    neo2D.draw.line(10, 10, 200, 100);
+
+    // draw rectangle
+    neo2D.draw.style("fill", "yellow") // set fill color;
+    neo2D.draw.rect("fill", 50, 200, 50, 25, 1);
+
+    // draw simple red circle
+    neo2D.draw.style("line", "red");
     neo2D.draw.circle("line", this.x, this.y, 20);
   }
 }

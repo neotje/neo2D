@@ -8,7 +8,7 @@ const neo2D = new function() {
   var canvas;
   var ctx;
 
-  var version = "0.1";
+  var version = "2019.1";
 
   var keys = {};
   var keysPress = {};
@@ -209,6 +209,10 @@ const neo2D = new function() {
 
   this.getVersion = function() {
     return version;
+  }
+
+  this.get2Dcontext = function() {
+    return ctx;
   }
 
   this.start = function() {
@@ -432,7 +436,7 @@ const neo2D = new function() {
       ctx.closePath();
     }
 
-    this.line = function(drawMode, x1, y1, x2, y1, segments) {
+    this.line = function(x1, y1, x2, y2, segments) {
       ctx.beginPath();
 
       if (segments) {
@@ -440,22 +444,16 @@ const neo2D = new function() {
       }
 
       ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y1);
-
-      setDrawMode(drawMode);
-
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
       ctx.closePath();
     }
 
-    this.rect = function(drawMode, x, y, w, h, rotate, scale) {
+    this.rect = function(drawMode, x, y, w, h, rotate) {
       ctx.beginPath();
 
       if (rotate) {
         ctx.rotate(rotate);
-      }
-
-      if (scale) {
-        ctx.scale(scale[0], scale[1]);
       }
 
       ctx.rect(x, y, w, h);
@@ -463,6 +461,10 @@ const neo2D = new function() {
       setDrawMode(drawMode);
 
       ctx.closePath();
+
+      if (rotate) {
+        ctx.rotate(-rotate);
+      }
     }
 
     this.text = function(drawMode, text, x, y, maxWidth) {
