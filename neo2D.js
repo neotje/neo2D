@@ -8,7 +8,7 @@ const neo2D = new function() {
   var canvas;
   var ctx;
 
-  var version = "2019.1";
+  var version = "2019.2";
 
   var keys = {};
   var keysPress = {};
