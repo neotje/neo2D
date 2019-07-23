@@ -5,7 +5,13 @@ class entity {
     this.x = neo2D.canvas.getWidth() / 2;
     this.y = neo2D.canvas.getHeight() / 2;
 
-    this.speed = 200;
+    this.speed = 100;
+
+    this.canvas = 1;
+
+    // get image
+    this.img = new Image();
+    this.img.src = "./image.jpeg"
 
     neo2D.keyboard.add("w", "up");
     neo2D.keyboard.add("s", "down");
@@ -29,6 +35,10 @@ class entity {
   }
 
   draw() {
+    neo2D.draw.style("fill", "black"); // set fill color
+    var fpsText = neo2D.draw.text("fill", "fps: " + Math.round(neo2D.performance.fps()), 250, 50, 50);
+    neo2D.draw.text("fill", "Dt: " + Math.round(neo2D.performance.deltaTime() * 1000), 250, 70, 50);
+
     // set lineWidth
     neo2D.draw.lineWidth(2);
 
@@ -40,11 +50,17 @@ class entity {
 
     // draw line
     neo2D.draw.style("line", "blue");
-    neo2D.draw.line(10, 10, 200, 100);
+    neo2D.draw.line(neo2D.math.randomNumber(0, 300), neo2D.math.randomNumber(0, 300), 150, 150);
 
     // draw rectangle
     neo2D.draw.style("fill", "yellow") // set fill color;
     neo2D.draw.rect("fill", 50, 200, 50, 25, 1);
+
+    // draw image
+    neo2D.draw.image(this.img, 10, 75, 100, 100);
+
+    // draw part of image
+    neo2D.draw.partOfImage(this.img, 85, 0, 50, 60, 190, 75, 100, 120);
 
     // draw simple red circle
     neo2D.draw.style("line", "red");

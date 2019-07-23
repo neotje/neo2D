@@ -29,6 +29,7 @@ const neo2D = new function() {
   var fps;
 
   var run;
+  var pause = false;
   var running;
 
   var entities = {};
@@ -49,6 +50,8 @@ const neo2D = new function() {
     canvas.removeEventListener("mousemove", mouseUpdate);
 
     if (running) {
+      pause = true;
+
       canvas.removeEventListener("click", mouseClick);
       canvas.removeEventListener("mousedown", mouseDownListener);
       canvas.removeEventListener("mouseup", mouseUpListener);
@@ -71,6 +74,8 @@ const neo2D = new function() {
       window.addEventListener("keypress", keyPressListener);
       window.addEventListener("keydown", keyDownListener);
       window.addEventListener("keyup", keyUpListener);
+
+      pause = false;
     }
   }
 
@@ -171,6 +176,10 @@ const neo2D = new function() {
   }
 
   function loop() {
+    while (pause == true) {
+
+    }
+
     if (run == false) {
       running = false;
       return;
@@ -227,6 +236,18 @@ const neo2D = new function() {
     beginTime = performance.now();
     run = true;
     loop();
+  }
+
+  this.pause = function() {
+    if (pause == true) {
+      pause = false;
+      return
+    }
+
+    if (pause == false) {
+      pause = true;
+      return
+    }
   }
 
   this.stop = function() {
@@ -449,22 +470,14 @@ const neo2D = new function() {
       ctx.closePath();
     }
 
-    this.rect = function(drawMode, x, y, w, h, rotate) {
+    this.rect = function(drawMode, x, y, w, h) {
       ctx.beginPath();
-
-      if (rotate) {
-        ctx.rotate(rotate);
-      }
 
       ctx.rect(x, y, w, h);
 
       setDrawMode(drawMode);
 
       ctx.closePath();
-
-      if (rotate) {
-        ctx.rotate(-rotate);
-      }
     }
 
     this.text = function(drawMode, text, x, y, maxWidth) {
@@ -489,6 +502,22 @@ const neo2D = new function() {
       ctx.closePath();
 
       return ctx.measureText(text);
+    }
+
+    this.image = function(img, x, y, w, h) {
+      if (w && h) {
+        ctx.drawImage(img, x, y, w, h);
+      } else {
+        ctx.drawImage(img, x, y);
+      }
+    }
+
+    this.partOfImage = function(img, sx, sy, sw, sh, x, y, w, h) {
+      if (w && h) {
+        ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
+      } else {
+        ctx.drawImage(img, sx, sy, sw, sh, x, y);
+      }
     }
   }
 
